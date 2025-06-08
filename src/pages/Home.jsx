@@ -92,6 +92,9 @@ const Home = () => {
                 </div> */}
             </header>
             <main className="flex flex-col flex-1 min-h-[calc(100vh-60px)]">
+                <div className="hero h-35">
+                    <h1 className="text-5xl font-bold text-center self-end">Mis eventos</h1>
+                </div>
                 <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
                     <Link to="/crear-evento">
                         <button className="btn btn-primary btn-lg gap-2 normal-case">
@@ -102,7 +105,7 @@ const Home = () => {
                         </button>
                     </Link>
                 </div>
-                <div className="container mx-auto px-4 pt-24 pb-20">
+                <div className="container mx-auto px-4 pt-10 pb-20">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {eventos.map((evento) => (
                             <div key={evento.id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1">

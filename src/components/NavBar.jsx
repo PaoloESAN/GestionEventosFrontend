@@ -5,7 +5,7 @@ import BotonTemas from './BotonTemas'
 function NavBar() {
     return (
         <>
-            <div className="navbar bg-base-100 shadow-sm">
+            <div className="navbar shadow-sm backdrop-blur">
                 <div className="navbar-start">
                     <a className="btn btn-ghost text-xl">EventoFix</a>
                 </div>

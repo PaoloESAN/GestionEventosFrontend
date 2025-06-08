@@ -65,7 +65,7 @@ const Home = () => {
     ]; return (
         <>
             <header className="fixed w-full z-50">
-                <NavBar />
+                <NavBar tabAct={1} />
                 {/* <div className="navbar bg-base-100/90 backdrop-blur shadow-sm">
                     <div className="flex-1">
                         <Link to="/home" className="btn btn-ghost text-xl">Título de página</Link>

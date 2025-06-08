@@ -2,7 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import BotonTemas from './BotonTemas'
 
-function NavBar() {
+function NavBar({ tabAct }) {
+    let homeAct = 'tab text-xl';
+    let eventosAct = 'tab text-xl';
+    let ticketsAct = 'tab text-xl';
+    if (tabAct == 1) {
+        homeAct += ' tab-active';
+    } else if (tabAct == 2) {
+        eventosAct += ' tab-active';
+    } else if (tabAct == 3) {
+        ticketsAct += ' tab-active';
+    }
     return (
         <>
             <div className="navbar shadow-sm backdrop-blur">
@@ -11,11 +21,11 @@ function NavBar() {
                 </div>
                 <div className="navbar-center">
                     <ul className="menu menu-horizontal px-1">
-                        <li><Link to="/home" className="tab tab-active text-xl">Inicio</Link></li>
+                        <li><Link to="/home" className={homeAct}>Inicio</Link></li>
                         <li>
-                            <Link to="/eventos" className="tab text-xl">Eventos</Link>
+                            <Link to="/eventos" className={eventosAct}>Eventos</Link>
                         </li>
-                        <li><Link to="/tickets" className="tab text-xl">Tickets</Link></li>
+                        <li><Link to="/tickets" className={ticketsAct}>Tickets</Link></li>
                     </ul>
                 </div>
                 <div className="flex gap-2 navbar-end mt-2">

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login/Login';
 import Register from './components/Login/Register';
 import Home from './pages/Home';
+import './App.css';
 
 function App() {
   // Aquí podrías agregar la lógica para verificar si el usuario está autenticado

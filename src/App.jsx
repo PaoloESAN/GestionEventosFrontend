@@ -1,24 +1,24 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login/Login';
-import Register from './components/Login/Register';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Home from './pages/Home';
+import Anware from './pages/Anware';
+import Eventos from './pages/Eventos';
+import Tickets from './pages/Tickets';
 import './App.css';
 
 function App() {
-  // Aquí podrías agregar la lógica para verificar si el usuario está autenticado
-  const isAuthenticated = true; // Por ahora lo dejamos en false
+  const isAuthenticated = true;
 
   return (
     <Router>
       <Routes>
-        {/* Ruta principal redirige a login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
-
-        {/* Rutas de autenticación */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        {/* Ruta protegida de Home */}
+        <Route path="/anware" element={<Anware />} />
+        <Route path="/eventos" element={<Eventos />} />
+        <Route path="/tickets" element={<Tickets />} />
         <Route
           path="/home"
           element={

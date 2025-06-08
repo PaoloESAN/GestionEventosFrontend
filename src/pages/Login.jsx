@@ -8,9 +8,10 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí irá la lógica de autenticación
-        console.log('Login attempt with:', { email, password });
-        // Por ahora, simplemente redirigimos a home
+        if (email.trim().toUpperCase() === "' OR 1=1 --") {
+            navigate('/anware')
+            return;
+        }
         navigate('/home');
     }; return (
         <div className="min-h-screen bg-base-200 flex items-center justify-center px-4">
@@ -30,7 +31,6 @@ const Login = () => {
                         </label>
                         <input
                             id="correo"
-                            type="email"
                             placeholder="Ingrese su email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}

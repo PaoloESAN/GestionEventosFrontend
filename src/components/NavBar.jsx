@@ -11,11 +11,11 @@ function NavBar() {
                 </div>
                 <div className="navbar-center">
                     <ul className="menu menu-horizontal px-1">
-                        <li><Link to="/home" className="tab tab-active">Inicio</Link></li>
+                        <li><Link to="/home" className="tab tab-active text-xl">Inicio</Link></li>
                         <li>
-                            <Link to="/eventos" className="tab">Eventos</Link>
+                            <Link to="/eventos" className="tab text-xl">Eventos</Link>
                         </li>
-                        <li><Link to="/tickets" className="tab">Tickets</Link></li>
+                        <li><Link to="/tickets" className="tab text-xl">Tickets</Link></li>
                     </ul>
                 </div>
                 <div className="flex gap-2 navbar-end mt-2">

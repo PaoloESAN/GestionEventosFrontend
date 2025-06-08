@@ -1,18 +1,18 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
-import conciertoImg from '../assets/concierto.png';
-import teatroImg from '../assets/teatro.png';
-import circoImg from '../assets/circo.png';
+import bodaImg from '../assets/boda.png';
+import charlaImg from '../assets/charla.png';
+import defaultImg from '../assets/default.png';
 import foroImg from '../assets/foro.png';
-import veladaImg from '../assets/velada.png';
-import fiestaImg from '../assets/fiesta.png';
+import teatroImg from '../assets/teatro.png';
+import conciertoImg from '../assets/concierto.png';
 
 export default function Eventos() {
     const eventos = [
         {
             id: 1,
-            imagen: conciertoImg,
+            imagen: bodaImg,
             lugar: "Estadio Nacional - Lima",
             titulo: "Grupo 5 2025 \"Gira Mundial\"",
             fecha: "5 noviembre 2025",
@@ -20,7 +20,7 @@ export default function Eventos() {
         },
         {
             id: 2,
-            imagen: fiestaImg,
+            imagen: charlaImg,
             lugar: "Estadio San Marcos - Lima",
             titulo: "Bad Bunny - Most Wanted Tour",
             fecha: "14 DIC 2025",
@@ -28,7 +28,7 @@ export default function Eventos() {
         },
         {
             id: 3,
-            imagen: foroImg,
+            imagen: defaultImg,
             lugar: "Estadio Nacional - Lima",
             titulo: "Tool - Fear Inoculum Tour",
             fecha: "22 AGO 2025",
@@ -36,7 +36,7 @@ export default function Eventos() {
         },
         {
             id: 4,
-            imagen: teatroImg,
+            imagen: foroImg,
             lugar: "Estadio Nacional - Lima",
             titulo: "Rosalía - MOTOMAMI World Tour",
             fecha: "30 SEP 2025",
@@ -44,7 +44,7 @@ export default function Eventos() {
         },
         {
             id: 5,
-            imagen: veladaImg,
+            imagen: teatroImg,
             lugar: "Estadio San Marcos - Lima",
             titulo: "The Weeknd - After Hours Tour",
             fecha: "15 OCT 2025",
@@ -52,7 +52,7 @@ export default function Eventos() {
         },
         {
             id: 6,
-            imagen: circoImg,
+            imagen: conciertoImg,
             lugar: "Estadio Nacional - Lima",
             titulo: "Karol G - Mañana Será Bonito Tour",
             fecha: "28 JUL 2025",

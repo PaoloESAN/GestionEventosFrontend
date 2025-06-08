@@ -24,7 +24,6 @@ const Home = () => {
             titulo: "Bad Bunny - Most Wanted Tour",
             fecha: "14 DIC 2025",
             organizador: "Live Nation Perú",
-            organizadorImagen: "https://ui-avatars.com/api/?name=Live+Nation&background=6D28D9&color=fff"
         },
         {
             id: 3,
@@ -33,7 +32,6 @@ const Home = () => {
             titulo: "Tool - Fear Inoculum Tour",
             fecha: "22 AGO 2025",
             organizador: "Move Concerts",
-            organizadorImagen: "https://ui-avatars.com/api/?name=Move+Concerts&background=059669&color=fff"
         },
         {
             id: 4,
@@ -42,7 +40,6 @@ const Home = () => {
             titulo: "Rosalía - MOTOMAMI World Tour",
             fecha: "30 SEP 2025",
             organizador: "Bizarro Live Entertainment",
-            organizadorImagen: "https://ui-avatars.com/api/?name=Bizarro+Live&background=DC2626&color=fff"
         },
         {
             id: 5,
@@ -51,7 +48,6 @@ const Home = () => {
             titulo: "The Weeknd - After Hours Tour",
             fecha: "15 OCT 2025",
             organizador: "One Entertainment",
-            organizadorImagen: "https://ui-avatars.com/api/?name=One+Entertainment&background=0369A1&color=fff"
         },
         {
             id: 6,
@@ -60,36 +56,11 @@ const Home = () => {
             titulo: "Karol G - Mañana Será Bonito Tour",
             fecha: "28 JUL 2025",
             organizador: "Masterlive Perú",
-            organizadorImagen: "https://ui-avatars.com/api/?name=Masterlive+Peru&background=B91C1C&color=fff"
         }
     ]; return (
         <>
             <header className="fixed w-full z-50">
                 <NavBar tabAct={1} />
-                {/* <div className="navbar bg-base-100/90 backdrop-blur shadow-sm">
-                    <div className="flex-1">
-                        <Link to="/home" className="btn btn-ghost text-xl">Título de página</Link>
-                        <div className="tabs tabs-boxed bg-base-200 ml-4">
-                            <Link to="/home" className="tab tab-active">Inicio</Link>
-                            <Link to="/eventos" className="tab">Eventos</Link>
-                            <Link to="/tickets" className="tab">Tickets</Link>
-                        </div>
-                    </div>
-                    <div className="flex-none gap-2">
-                        <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full bg-primary/10">
-                                    <span className="text-xl">👤</span>
-                                </div>
-                            </div>
-                            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                <li><Link to="/perfil">Perfil</Link></li>
-                                <li><Link to="/settings">Configuración</Link></li>
-                                <li><Link to="/logout">Cerrar sesión</Link></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> */}
             </header>
             <main className="flex flex-col flex-1 min-h-[calc(100vh-60px)]">
                 <div className="hero h-35">

@@ -14,7 +14,7 @@ export default function Tickets() {
             titulo: "Grupo 5 2025 \"Gira Mundial\"",
             fecha: "5 NOV 2025",
             organizador: "Master Music Entertainment", tipo: "VIP", estado: "Planificado",
-            numeroTicket: "001"
+            cantTickets: "1"
         },
         {
             id: 2,
@@ -23,7 +23,7 @@ export default function Tickets() {
             titulo: "Rosalía - MOTOMAMI World Tour",
             fecha: "30 SEP 2025",
             organizador: "Bizarro Live Entertainment", tipo: "General", estado: "En curso",
-            numeroTicket: "002"
+            cantTickets: "2"
         },
         {
             id: 3,
@@ -32,7 +32,7 @@ export default function Tickets() {
             titulo: "Karol G - Mañana Será Bonito Tour",
             fecha: "28 JUL 2025",
             organizador: "Masterlive Perú", tipo: "Platinum", estado: "Finalizado",
-            numeroTicket: "003"
+            cantTickets: "3"
         }
     ];
 
@@ -66,7 +66,7 @@ export default function Tickets() {
                                         <div className="mt-2">
                                             <span className="font-semibold">Tipo: </span>{ticket.tipo}
                                         </div>                                        <div className="text-sm opacity-75">
-                                            <span className="font-semibold">Número de ticket: </span>{ticket.numeroTicket}
+                                            <span className="font-semibold">Cantidad de tickets: </span>{ticket.cantTickets}
                                         </div>
                                     </div>
                                     <div className="card-actions justify-end">

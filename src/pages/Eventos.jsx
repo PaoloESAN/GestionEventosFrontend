@@ -81,7 +81,7 @@ export default function Eventos() {
                                     <h2 className="card-title mt-2">{evento.titulo}</h2>
                                     <p className="text-sm text-base-content/70">{evento.organizador}</p>
                                     <div className="card-actions justify-end mt-4">
-                                        <button className="btn btn-primary btn-sm">Ver detalles</button>
+                                        <button className="btn btn-primary btn-sm">Comprar Tickets</button>
                                     </div>
                                 </div>
                             </div>

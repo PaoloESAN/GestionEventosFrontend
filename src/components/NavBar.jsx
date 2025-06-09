@@ -19,7 +19,7 @@ function NavBar({ tabAct }) {
                 <div className="navbar-start">
                     <a className="btn btn-ghost text-xl">EventoFix</a>
                 </div>
-                <div className="navbar-center">
+                <div className="tabs tabs-border navbar-center">
                     <ul className="menu menu-horizontal px-1">
                         <li><Link to="/home" className={homeAct}>Inicio</Link></li>
                         <li>

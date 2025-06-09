@@ -6,6 +6,7 @@ import Anware from './pages/Anware';
 import Eventos from './pages/Eventos';
 import Tickets from './pages/Tickets';
 import './App.css';
+import CrearEvento from './pages/CrearEvento';
 
 function App() {
   const isAuthenticated = true;
@@ -19,6 +20,7 @@ function App() {
         <Route path="/anware" element={<Anware />} />
         <Route path="/eventos" element={<Eventos />} />
         <Route path="/tickets" element={<Tickets />} />
+        <Route path="/crear-evento" element={<CrearEvento />} />
         <Route
           path="/home"
           element={

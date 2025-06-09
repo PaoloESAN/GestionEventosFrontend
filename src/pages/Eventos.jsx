@@ -254,14 +254,11 @@ export default function Eventos() {
                         <div className="modal-action">
                             <button
                                 onClick={() => setEventoSeleccionado(null)}
-                                className="btn">
+                                className="btn btn-primary">
                                 Cerrar
                             </button>
                         </div>
                     </div>
-                    <form method="dialog" className="modal-backdrop">
-                        <button onClick={() => setEventoSeleccionado(null)}>cerrar</button>
-                    </form>
                 </dialog>
             )}
 

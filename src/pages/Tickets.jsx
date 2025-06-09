@@ -145,8 +145,10 @@ export default function Tickets() {
                     isOpen={!!ticketSeleccionado}
                     onClose={() => setTicketSeleccionado(null)}
                     title="Detalles del Ticket"
-                >                    <div className="p-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">                            {/* Imagen y detalles principales */}
+                >
+                    <div className="p-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Imagen y detalles principales */}
                             <div>
                                 <div className="relative h-64 mb-4">
                                     <img

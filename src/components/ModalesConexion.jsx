@@ -70,12 +70,23 @@ export function ModalRegistroEmail() {
     )
 }
 
-export function ModalRegistroExitoso() {
+export function ModalRegistroExitoso({ onContinue }) {
     return (
         <dialog id="modalRegistroExitoso" className="modal">
             <div className="modal-box">
-                <h3 className="font-bold text-2xl text-green-600">Registro Exitoso</h3>
-                <p className="py-4">Se ha registrado correctamente.</p>
+                <h3 className="font-bold text-2xl text-green-600">¡Registro Exitoso!</h3>
+                <p className="py-4">Tu cuenta ha sido creada correctamente. Ahora puedes iniciar sesión.</p>
+                <div className="modal-action">
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                            document.getElementById('modalRegistroExitoso').close();
+                            if (onContinue) onContinue();
+                        }}
+                    >
+                        Ir al Login
+                    </button>
+                </div>
             </div>
             <form method="dialog" className="modal-backdrop">
                 <button>close</button>

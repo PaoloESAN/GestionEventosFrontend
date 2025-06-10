@@ -44,18 +44,16 @@ const Register = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+                }, body: JSON.stringify({
                     nombres: formData.nombres,
                     apellidos: formData.apellidos,
                     email: formData.email,
                     contrasena: formData.contraseña
                 })
-            })
+            });
 
             if (respuesta.ok) {
                 document.getElementById('modalRegistroExitoso').showModal();
-                navigate('/login');
             } else if (respuesta.status === 400) {
                 document.getElementById('modalRegistroEmail').showModal();
             } else {
@@ -66,14 +64,12 @@ const Register = () => {
             document.getElementById('modalErrorConexion').showModal();
         }
 
-    };
-
-    return (
+    }; return (
         <>
             <ModalErrorConexion />
             <ModalRegistroEmail />
             <ModalRegistroError />
-            <ModalRegistroExitoso />
+            <ModalRegistroExitoso onContinue={() => navigate('/login')} />
             <ModalRegistroErrorContra />
             <ModalRegistroErrorCampos />
             <div className="min-h-screen bg-base-200 flex items-center justify-center">

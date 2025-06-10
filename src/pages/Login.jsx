@@ -18,7 +18,6 @@ const Login = () => {
             const data = await respuesta.json();
             if (data.respuesta === true) {
                 localStorage.setItem('userId', data.userId);
-                document.getElementById('modalLoginExitoso').showModal();
                 navigate('/home');
             } else {
                 document.getElementById('modalLoginError').showModal();
@@ -30,7 +29,6 @@ const Login = () => {
 
     }; return (
         <>
-            <ModalLoginExitoso />
             <ModalLoginError />
             <ModalErrorConexion />
             <div className="min-h-screen bg-base-200 flex items-center justify-center px-4">

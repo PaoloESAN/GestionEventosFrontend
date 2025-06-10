@@ -145,7 +145,6 @@ export default function Tickets() {
                 </div>
             </main>
 
-            {/* Modal de Detalles del Ticket */}
             {ticketSeleccionado && (
                 <Modal
                     isOpen={!!ticketSeleccionado}
@@ -154,7 +153,6 @@ export default function Tickets() {
                 >
                     <div className="p-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Imagen y detalles principales */}
                             <div>                                <div className="relative h-64 mb-4">
                                 <img
                                     src={getImagenPorCategoria(ticketSeleccionado.evento?.categoria)}
@@ -163,7 +161,6 @@ export default function Tickets() {
                                 />
                             </div>
 
-                                {/* Ubicación y organizador */}
                                 <div className="bg-base-200 rounded-lg p-4">
                                     <h4 className="font-bold text-lg mb-3">Información del Evento</h4>
                                     <div className="space-y-2">
@@ -183,8 +180,7 @@ export default function Tickets() {
                                 </div>
                             </div>
 
-                            {/* Detalles del evento y ticket */}
-                            <div className="space-y-6">                                {/* Información del Evento */}
+                            <div className="space-y-6">
                                 <div className="bg-base-200 rounded-lg p-4">
                                     <h3 className="text-2xl font-bold mb-2">{ticketSeleccionado.evento?.nombre || 'Evento no disponible'}</h3>
                                     <p className="text-base-content/70 mb-4">{ticketSeleccionado.evento?.descripcion || 'Sin descripción'}</p>
@@ -216,7 +212,7 @@ export default function Tickets() {
                                             </p>
                                         </div>
                                     </div>
-                                </div>                                {/* Detalles del ticket */}
+                                </div>
                                 <div className="bg-base-200 rounded-lg p-4">
                                     <h4 className="font-bold text-lg mb-3">Detalles del Ticket</h4>
                                     <div className="space-y-4">

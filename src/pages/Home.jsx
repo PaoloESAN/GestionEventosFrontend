@@ -65,15 +65,12 @@ const Home = () => {
                     console.log('Eventos cargados (respuesta completa):', data);
                     console.log('Tipo de data:', typeof data);
                     console.log('¿Es un array?', Array.isArray(data));
-                    // Si data es un array, úsalo directamente
                     if (Array.isArray(data)) {
                         setEventos(data);
                     }
-                    // Si data.eventos existe, úsalo
                     else if (data.eventos && Array.isArray(data.eventos)) {
                         setEventos(data.eventos);
                     }
-                    // Si no hay datos válidos, usa un array vacío
                     else {
                         console.log('No se encontraron eventos en el formato esperado');
                         setEventos([]);
@@ -165,7 +162,6 @@ const Home = () => {
                 </div>
             </main>
 
-            {/* Modal de Detalles */}
             {eventoSeleccionado && (
                 <dialog className="modal modal-bottom sm:modal-middle" open>
                     <div className="modal-box">                        <h3 className="font-bold text-2xl mb-6">{eventoSeleccionado.nombre}</h3>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import BotonTemas from './BotonTemas'
+import PerfilModal from './PerfilModal'
+import fotoPerfil from '../assets/fotoPerfil.png';
 
 function NavBar({ tabAct }) {
     let homeAct = 'tab text-xl';
@@ -34,13 +36,13 @@ function NavBar({ tabAct }) {
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    src={fotoPerfil} />
                             </div>
-                        </div>                        <ul
+                        </div>
+                        <ul
                             tabIndex={0}
-                            className="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-56 p-3 shadow-lg">
-                            <li>
-                                <a className="justify-between py-2 px-3 rounded-md hover:bg-base-200">
+                            className="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-56 p-3 shadow-lg">                            <li>
+                                <a className="justify-between py-2 px-3 rounded-md hover:bg-base-200" onClick={() => document.getElementById('perfil').showModal()}>
                                     <span className="flex items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -73,8 +75,8 @@ function NavBar({ tabAct }) {
                             </li>
                         </ul>
                     </div>
-                </div>
-            </div >
+                </div>            </div >
+            <PerfilModal />
             <dialog id="temas" className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Temas</h3>

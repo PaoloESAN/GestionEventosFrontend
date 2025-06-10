@@ -73,7 +73,6 @@ export default function Eventos() {
         const cargarTickets = async () => {
             if (!eventoSeleccionado) return;
 
-            // Resetear estados cuando se selecciona un nuevo evento
             setTicketSeleccionado(null);
             setCantidad(1);
 
@@ -103,13 +102,11 @@ export default function Eventos() {
         const ticket = tiposTicket[ticketSeleccionado];
         const cantidadDisponible = ticket.cantidadDisponible || ticket.disponibles || ticket.stock || 0;
 
-        // Verificar si hay tickets disponibles
         if (cantidadDisponible <= 0) {
             alert('No hay tickets disponibles para este tipo.');
             return;
         }
 
-        // Verificar si la cantidad a comprar no excede la disponible
         if (cantidad > cantidadDisponible) {
             alert(`Solo hay ${cantidadDisponible} tickets disponibles.`);
             return;
@@ -152,7 +149,6 @@ export default function Eventos() {
                             )
                         );
 
-                        // Si el ticket se quedó sin stock, resetear la selección
                         if (nuevaCantidadDisponible <= 0) {
                             setTicketSeleccionado(null);
                             setCantidad(1);
@@ -243,12 +239,10 @@ export default function Eventos() {
                 </div>
             </main>
 
-            {/* Modal de Compra de Tickets */}
             {eventoSeleccionado && (<dialog className="modal modal-bottom sm:modal-middle" open>
                 <div className="modal-box max-w-3xl">
                     <h3 className="font-bold text-2xl mb-6">{eventoSeleccionado.nombre}</h3>
 
-                    {/* Información del Evento */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         <div>
                             <p className="font-semibold">Categoría</p>
@@ -293,7 +287,7 @@ export default function Eventos() {
                             <p className="font-semibold">Locación</p>
                             <p className="text-base-content/70">{eventoSeleccionado.locacion || 'No especificado'}</p>
                         </div>
-                    </div>                        {/* Sección de Tickets */}
+                    </div>
                     <div className="divider">Tickets Disponibles</div>
 
                     {tiposTicket.length === 0 ? (
@@ -333,7 +327,7 @@ export default function Eventos() {
                                 </div>
                             ))}
                         </div>
-                    )}                    {/* Selección de Cantidad */}
+                    )}
                     {ticketSeleccionado !== null && tiposTicket[ticketSeleccionado] && (
                         <div className="bg-base-200 p-6 rounded-lg mb-6">
                             <h4 className="font-semibold text-lg mb-4">Selecciona la cantidad</h4>
@@ -366,7 +360,7 @@ export default function Eventos() {
                                     className="btn btn-circle btn-sm btn-neutral">
                                     +
                                 </button>
-                            </div>                            {/* Resumen de la compra */}
+                            </div>
                             <div className="mt-6 p-4 bg-base-100 rounded-lg">
                                 <div className="flex justify-between items-center text-sm mb-2">
                                     <span>

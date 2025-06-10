@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import fotoPerfil from '../assets/fotoPerfil.png';
-
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+gsap.registerPlugin(useGSAP)
 export default function PerfilModal() {
     const [userData, setUserData] = useState({
         nombres: '',
@@ -10,7 +12,6 @@ export default function PerfilModal() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        // Cargar datos del usuario cuando se monta el componente
         const userId = localStorage.getItem('userId');
         if (userId) {
             cargarDatosUsuario(userId);
@@ -37,13 +38,19 @@ export default function PerfilModal() {
             setIsLoading(false);
         }
     };
+    const { contextSafe } = useGSAP();
+
+    const girar = contextSafe(({ currentTarget }) => {
+        gsap.to(currentTarget, { rotation: "+=360" });
+    });
 
     return (
         <dialog id="perfil" className="modal">
             <div className="modal-box max-w-md">
-                <h3 className="font-bold text-xl mb-6 flex items-center gap-2">                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
+                <h3 className="font-bold text-xl mb-6 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
                     Mi Perfil
                 </h3>
 
@@ -53,9 +60,8 @@ export default function PerfilModal() {
                     </div>
                 ) : (
                     <div className="space-y-6">
-                        {/* Foto de perfil */}
                         <div className="flex justify-center mb-6">
-                            <div className="avatar">
+                            <div className="avatar" onClick={girar}>
                                 <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                     <img
                                         src={fotoPerfil}
@@ -66,7 +72,6 @@ export default function PerfilModal() {
                             </div>
                         </div>
 
-                        {/* Información del usuario */}
                         <div className="space-y-4">
                             <div className="flex flex-col items-center text-center space-y-1">
                                 <h4 className="text-lg font-semibold text-base-content">

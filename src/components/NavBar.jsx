@@ -15,6 +15,7 @@ function NavBar({ tabAct }) {
     } else if (tabAct == 3) {
         ticketsAct += ' tab-active';
     }
+
     return (
         <>
             <div className="navbar shadow-sm backdrop-blur">

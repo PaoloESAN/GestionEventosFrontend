@@ -6,23 +6,22 @@ export default function AgregarTicketForm({ eventosExistentes, eventoSeleccionad
         <div className="flex flex-col gap-8">
             <div className="card bg-base-200 shadow-lg p-6">
                 <h3 className="text-2xl font-semibold mb-6">Seleccionar Evento</h3>
-                <div className="grid grid-cols-1 gap-6">
-                    {eventosExistentes.map(evento => (
-                        <div
-                            key={evento.id}
-                            className={`card bg-base-100 shadow-md transform transition-all duration-200 ease-in-out cursor-pointer 
-                                ${eventoSeleccionado === evento.id
-                                    ? 'border-2 border-primary scale-[1.02] shadow-lg'
-                                    : 'hover:scale-[1.01] hover:shadow-lg border-2 border-transparent'
-                                }`}
-                            onClick={() => setEventoSeleccionado(evento.id)}
-                        >
-                            <div className="card-body">
-                                <h3 className="card-title text-xl">{evento.nombre}</h3>
-                                <p className="text-base-content/70">{evento.lugar}</p>
-                            </div>
+                <div className="grid grid-cols-1 gap-6">                    {eventosExistentes.map(evento => (
+                    <div
+                        key={evento.eventoId}
+                        className={`card bg-base-100 shadow-md transform transition-all duration-200 ease-in-out cursor-pointer 
+                                ${eventoSeleccionado === evento.eventoId
+                                ? 'border-2 border-primary scale-[1.02] shadow-lg'
+                                : 'hover:scale-[1.01] hover:shadow-lg border-2 border-transparent'
+                            }`}
+                        onClick={() => setEventoSeleccionado(evento.eventoId)}
+                    >
+                        <div className="card-body">
+                            <h3 className="card-title text-xl">{evento.nombre}</h3>
+                            <p className="text-base-content/70">{evento.locacion}</p>
                         </div>
-                    ))}
+                    </div>
+                ))}
                 </div>
             </div>
 

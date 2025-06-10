@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import CrearEventoForm from '../components/CrearEventoForm'
@@ -8,13 +8,43 @@ import FormularioTicket from '../components/FormularioTicket'
 export default function CrearEvento() {
     const [modo, setModo] = useState('nuevo');
     const [eventoSeleccionado, setEventoSeleccionado] = useState('');
+    const [eventosExistentes, setEventosExistentes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const userId = localStorage.getItem('userId'); useEffect(() => {
+        const cargarEventos = async () => {
+            if (!userId) {
+                setIsLoading(false);
+                return;
+            }
 
-    const userId = localStorage.getItem('userId');
-    const eventosExistentes = [
-        { id: 1, nombre: "Grupo 5 2025 \"Gira Mundial\"", lugar: "Estadio Nacional - Lima" },
-        { id: 2, nombre: "Rosalía - MOTOMAMI World Tour", lugar: "Estadio Nacional - Lima" },
-        { id: 3, nombre: "Karol G - Mañana Será Bonito Tour", lugar: "Estadio Nacional - Lima" }
-    ];
+            try {
+                const respuesta = await fetch('http://localhost:8080/api/v1/eventos/organizador/' + userId);
+                if (respuesta.ok) {
+                    const data = await respuesta.json();
+                    console.log('Datos recibidos:', data);
+                    if (Array.isArray(data)) {
+                        setEventosExistentes(data);
+                    }
+                    else if (data.eventos) {
+                        setEventosExistentes(data.eventos);
+                    }
+                    else {
+                        setEventosExistentes([]);
+                    }
+                } else {
+                    console.error('Error al cargar eventos');
+                    setEventosExistentes([]);
+                }
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                setEventosExistentes([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        cargarEventos();
+    }, [userId]);
 
     const [formData, setFormData] = useState({
         evento: {
@@ -231,9 +261,15 @@ export default function CrearEvento() {
             </header>
             <main className="min-h-screen bg-base-200 pt-16 pb-8 px-4">
                 <div className="max-w-4xl mx-auto bg-base-100 shadow-xl rounded-lg mt-8">
-                    <form onSubmit={handleSubmit} className="card-body p-8">
-                        {renderSeleccionModo()}
-                    </form>
+                    {isLoading ? (
+                        <div className="flex justify-center items-center p-8">
+                            <span className="loading loading-spinner loading-lg"></span>
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="card-body p-8">
+                            {renderSeleccionModo()}
+                        </form>
+                    )}
                 </div>
             </main>
             <Footer />

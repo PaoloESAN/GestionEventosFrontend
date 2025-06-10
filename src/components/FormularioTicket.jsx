@@ -8,8 +8,8 @@ export default function FormularioTicket({ formData, handleChange, tiposTicket }
                     <span className="label-text text-lg">Tipo de Ticket:</span>
                 </label>
                 <select
-                    name="ticket.tipo"
-                    value={formData.ticket.tipo}
+                    name="ticket.tipoTicket"
+                    value={formData.ticket.tipoTicket}
                     onChange={handleChange}
                     className="select select-bordered text-lg"
                     required

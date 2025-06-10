@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function CrearEventoForm({ formData, handleChange, categorias, renderFormularioTicket }) {
+
     return (
         <>
             <div className="flex flex-col gap-8">
@@ -63,29 +64,13 @@ export default function CrearEventoForm({ formData, handleChange, categorias, re
                                 name="evento.locacion"
                                 value={formData.evento.locacion}
                                 onChange={handleChange}
-                                className="input input-bordered text-lg"
+                                className="input input-bordered text-lg w-183"
                                 placeholder="Lugar del evento"
                                 required
                             />
                         </div>
 
-                        <div className="form-control flex flex-col">
-                            <label className="label">
-                                <span className="label-text text-lg">Estado</span>
-                            </label>
-                            <select
-                                name="evento.estado"
-                                value={formData.evento.estado}
-                                onChange={handleChange}
-                                className="select select-bordered text-lg"
-                                required
-                            >
-                                <option value="activo">Activo</option>
-                                <option value="borrador">Borrador</option>
-                                <option value="cancelado">Cancelado</option>
-                                <option value="finalizado">Finalizado</option>
-                            </select>
-                        </div>
+                        <div></div>
 
                         <div className="form-control">
                             <label className="label">
@@ -120,14 +105,6 @@ export default function CrearEventoForm({ formData, handleChange, categorias, re
                 <div className="card bg-base-200 shadow-lg p-6">
                     <h3 className="text-2xl font-semibold mb-6">Información del Ticket</h3>
                     {renderFormularioTicket()}
-                </div>
-
-                <div className="form-control flex-row justify-end gap-4 text-center">
-                    <button
-                        type="submit"
-                        className="btn btn-primary text-lg px-8 py-3 h-14 min-w-[200px] transition-all hover:-translate-y-0.5 shadow-lg">
-                        Crear Evento
-                    </button>
                 </div>
             </div>
         </>

@@ -51,7 +51,7 @@ function NavBar({ tabAct }) {
                                     <span className="badge">New</span>
                                 </a>
                             </li>
-                            <li><Link to="/login">Cerrar sesión</Link></li>
+                            <li><Link onClick={() => localStorage.removeItem('userId')} to="/login">Cerrar sesión</Link></li>
                         </ul>
                     </div>
                 </div>

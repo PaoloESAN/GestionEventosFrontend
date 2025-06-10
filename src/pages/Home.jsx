@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import conciertoImg from '../assets/concierto.png';
 import teatroImg from '../assets/teatro.png';
 import circoImg from '../assets/circo.png';
@@ -7,9 +7,21 @@ import veladaImg from '../assets/velada.png';
 import fiestaImg from '../assets/fiesta.png';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Home = () => {
+
+    const navigate = useNavigate();
+
+    const userId = localStorage.getItem('userId');
+
+    useEffect(() => {
+        if (!userId) {
+            navigate('/login');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const [eventoSeleccionado, setEventoSeleccionado] = React.useState(null); const eventos = [
         {
             id: 1,

@@ -15,7 +15,9 @@ const Login = () => {
 
         try {
             const respuesta = await fetch(`http://localhost:8080/api/v1/usuarios/login/${email}/${password}`);
-            if (respuesta.ok) {
+            const data = await respuesta.json();
+            if (data.respuesta === true) {
+                localStorage.setItem('userId', data.userId);
                 document.getElementById('modalLoginExitoso').showModal();
                 navigate('/home');
             } else {

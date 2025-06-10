@@ -9,6 +9,7 @@ export default function CrearEvento() {
     const [modo, setModo] = useState('nuevo');
     const [eventoSeleccionado, setEventoSeleccionado] = useState('');
 
+    const userId = localStorage.getItem('userId');
     const eventosExistentes = [
         { id: 1, nombre: "Grupo 5 2025 \"Gira Mundial\"", lugar: "Estadio Nacional - Lima" },
         { id: 2, nombre: "Rosalía - MOTOMAMI World Tour", lugar: "Estadio Nacional - Lima" },
@@ -20,13 +21,12 @@ export default function CrearEvento() {
             nombre: '',
             categoria: '',
             descripcion: '',
-            estado: 'activo',
             fechaInicio: '',
             fechaFin: '',
             locacion: ''
         },
         ticket: {
-            tipo: '',
+            tipoTicket: '',
             cantidadTotal: '',
             fechaInicioVenta: '',
             fechaFinVenta: '',
@@ -35,12 +35,14 @@ export default function CrearEvento() {
     });
 
     const categorias = [
+        'Boda',
+        'Charla',
+        'Circo',
         'Concierto',
-        'Teatro',
-        'Conferencia',
-        'Deportivo',
-        'Cultural',
         'Fiesta',
+        'Foro',
+        'Teatro',
+        'Velada',
         'Otro'
     ];
 
@@ -62,12 +64,91 @@ export default function CrearEvento() {
                 [field]: value
             }
         }));
-    }; const handleSubmit = (e) => {
+    };
+
+    /*{
+  "nombre": "Boda nose",
+  "descripcion": "Una boda increible",
+  "fechaInicio": "2025-07-15T09:00",
+  "fechaFin": "2025-07-15T18:00",
+  "organizadorId": 1,
+  "locacion":"la casa de alberto",
+  "categoria": "Boda",
+  "estado": "planificado"
+} */
+
+    /* 
+    {
+      "eventoId": 1,
+      "tipoTicket": "VIP",
+      "precio": 99.99,
+      "cantidadDisponible": 100,
+      "fechaInicioVenta": "2025-06-09T10:00:00",
+      "fechaFinVenta": "2025-06-30T23:59:59",
+      "cantidadTotal": 100
+  }
+    */
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (modo === 'nuevo') {
-            console.log('Creando nuevo evento con ticket:', formData);
+            const respuesta = await fetch('http://localhost:8080/api/v1/eventos/crear', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...formData.evento,
+                    organizadorId: userId,
+                    ticket: formData.ticket
+                })
+            });
+            const data = await respuesta.json();
+            const eventoId = data.eventoId;
+            if (respuesta.ok) {
+                const ticketRespuesta = await fetch('http://localhost:8080/api/v1/tickets/crear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ...formData.ticket,
+                        eventoId: eventoId,
+                        cantidadDisponible: formData.ticket.cantidadTotal
+                    })
+                });
+                if (ticketRespuesta.ok) {
+                    //document.getElementById('modalEventoCreado').showModal();
+                    alert('Evento y ticket creados exitosamente');
+                } else {
+                    const ticketData = await ticketRespuesta.json();
+                    console.error('Error al crear el ticket:', ticketData.mensaje);
+                    alert('Error al crear el ticket');
+                    //document.getElementById('modalErrorCrearTicket').showModal();
+                }
+            } else {
+                console.error('Error al crear el evento:', data.mensaje);
+                alert('Error al crear el evento');
+                //document.getElementById('modalErrorCrearEvento').showModal();
+            }
         } else {
-            console.log('Agregando ticket al evento:', eventoSeleccionado, formData.ticket);
+            const respuesta = await fetch(`http://localhost:8080/api/v1/tickets/crear`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...formData.ticket,
+                    eventoId: eventoSeleccionado,
+                    cantidadDisponible: formData.ticket.cantidadTotal
+                })
+            });
+            if (respuesta.ok) {
+                alert('Ticket creado exitosamente');
+                //document.getElementById('modalTicketCreado').showModal();
+            } else {
+                alert('Error al crear el ticket:');
+                //document.getElementById('modalErrorCrearTicket').showModal();
+            }
         }
     };
 
@@ -115,13 +196,21 @@ export default function CrearEvento() {
 
             <div className="w-full animate-fadeIn">
                 {modo === 'nuevo' ? (
-                    <CrearEventoForm
-                        formData={formData}
-                        handleChange={handleChange}
-                        categorias={categorias}
-                        tiposTicket={tiposTicket}
-                        renderFormularioTicket={renderFormularioTicket}
-                    />
+                    <>
+                        <CrearEventoForm
+                            formData={formData}
+                            handleChange={handleChange}
+                            categorias={categorias}
+                            tiposTicket={tiposTicket}
+                            renderFormularioTicket={renderFormularioTicket}
+                        />
+                        <div className="flex-row justify-end gap-4 text-center mt-8">
+                            <button
+                                className="btn btn-primary text-lg px-8 py-3 h-14 min-w-[200px] transition-all hover:-translate-y-0.5 shadow-lg">
+                                Crear Evento
+                            </button>
+                        </div>
+                    </>
                 ) : (<AgregarTicketForm
                     eventosExistentes={eventosExistentes}
                     eventoSeleccionado={eventoSeleccionado}

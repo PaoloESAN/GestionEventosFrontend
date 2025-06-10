@@ -78,63 +78,69 @@ export default function Tickets() {
                         {isLoading ? (
                             <div className="flex justify-center items-center p-8">
                                 <span className="loading loading-spinner loading-lg"></span>
-                            </div>
-                        ) : misTickets.length === 0 ? (
-                            <div className="text-center p-8">
-                                <p className="text-base-content/70">No tienes tickets comprados aún</p>
-                            </div>
-                        ) : misTickets.map((ticket) => (
-                            <div key={ticket.asistenteEventoId || ticket.ticketId} className="card h-50 card-side bg-base-100 shadow-xl hover:shadow-2xl transition-all hover:-translate-x-1">
-                                <figure className="w-1/4">
-                                    <img
-                                        src={getImagenPorCategoria(ticket.evento?.categoria)}
-                                        alt={ticket.evento?.nombre}
-                                        className="h-full w-full object-cover"
-                                    />
-                                </figure>
-                                <div className="card-body flex-row items-center justify-between p-6 w-3/4">
-                                    <div className="flex flex-col flex-1">
-                                        <div className="flex gap-2 mb-2">
-                                            <div className="badge badge-primary">
-                                                {ticket.evento?.fechaInicio
-                                                    ? new Date(ticket.evento.fechaInicio).toLocaleDateString('es-PE', {
-                                                        day: 'numeric',
-                                                        month: 'short',
-                                                        year: 'numeric'
-                                                    }).toUpperCase()
-                                                    : 'Fecha no disponible'
-                                                }
-                                            </div>
-                                            <div className="badge badge-ghost">{ticket.evento?.locacion || 'Ubicación no disponible'}</div>
-                                            <div className="badge badge-info">
-                                                {ticket.evento?.estado || 'Estado no disponible'}
-                                            </div>
-                                        </div>
-                                        <h2 className="card-title text-2xl">{ticket.evento?.nombre || 'Evento no disponible'}</h2>
-                                        <p className="text-base text-base-content/70">
-                                            {ticket.evento?.organizador?.nombres
-                                                ? `${ticket.evento.organizador.nombres} ${ticket.evento.organizador.apellidos}`
-                                                : 'Organizador no especificado'}
-                                        </p>
-                                        <div className="mt-2">
-                                            <span className="font-semibold">Tipo: </span>
-                                            {ticket.ticket?.tipo || ticket.ticket?.tipoTicket || 'No especificado'}
-                                        </div>
-                                        <div className="text-sm opacity-75">
-                                            <span className="font-semibold">Cantidad de tickets: </span>
-                                            {ticket.cantidadTickets || 'No especificado'}
-                                        </div>
-                                    </div>
-                                    <div className="card-actions justify-end">
-                                        <button
-                                            onClick={() => setTicketSeleccionado(ticket)}
-                                            className="btn btn-primary">
-                                            Ver detalles
-                                        </button>
+                            </div>) : misTickets.length === 0 ? (
+                                <div className="flex flex-col justify-center items-center p-12">
+                                    <div className="text-center">
+                                        <svg className="mx-auto h-24 w-24 text-base-content/30 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"></path>
+                                        </svg>
+                                        <h3 className="text-2xl font-semibold text-base-content/70 mb-2">No tienes tickets</h3>
+                                        <p className="text-base-content/50">Aún no has comprado ningún ticket.</p>
+                                        <p className="text-base-content/50 text-sm mt-2">Ve a la sección de Eventos para comprar tickets.</p>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ) : misTickets.map((ticket) => (
+                                <div key={ticket.asistenteEventoId || ticket.ticketId} className="card h-50 card-side bg-base-100 shadow-xl hover:shadow-2xl transition-all hover:-translate-x-1">
+                                    <figure className="w-1/4">
+                                        <img
+                                            src={getImagenPorCategoria(ticket.evento?.categoria)}
+                                            alt={ticket.evento?.nombre}
+                                            className="h-full w-full object-cover"
+                                        />
+                                    </figure>
+                                    <div className="card-body flex-row items-center justify-between p-6 w-3/4">
+                                        <div className="flex flex-col flex-1">
+                                            <div className="flex gap-2 mb-2">
+                                                <div className="badge badge-primary">
+                                                    {ticket.evento?.fechaInicio
+                                                        ? new Date(ticket.evento.fechaInicio).toLocaleDateString('es-PE', {
+                                                            day: 'numeric',
+                                                            month: 'short',
+                                                            year: 'numeric'
+                                                        }).toUpperCase()
+                                                        : 'Fecha no disponible'
+                                                    }
+                                                </div>
+                                                <div className="badge badge-ghost">{ticket.evento?.locacion || 'Ubicación no disponible'}</div>
+                                                <div className="badge badge-info">
+                                                    {ticket.evento?.estado || 'Estado no disponible'}
+                                                </div>
+                                            </div>
+                                            <h2 className="card-title text-2xl">{ticket.evento?.nombre || 'Evento no disponible'}</h2>
+                                            <p className="text-base text-base-content/70">
+                                                {ticket.evento?.organizador?.nombres
+                                                    ? `${ticket.evento.organizador.nombres} ${ticket.evento.organizador.apellidos}`
+                                                    : 'Organizador no especificado'}
+                                            </p>
+                                            <div className="mt-2">
+                                                <span className="font-semibold">Tipo: </span>
+                                                {ticket.ticket?.tipo || ticket.ticket?.tipoTicket || 'No especificado'}
+                                            </div>
+                                            <div className="text-sm opacity-75">
+                                                <span className="font-semibold">Cantidad de tickets: </span>
+                                                {ticket.cantidadTickets || 'No especificado'}
+                                            </div>
+                                        </div>
+                                        <div className="card-actions justify-end">
+                                            <button
+                                                onClick={() => setTicketSeleccionado(ticket)}
+                                                className="btn btn-primary">
+                                                Ver detalles
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </main>

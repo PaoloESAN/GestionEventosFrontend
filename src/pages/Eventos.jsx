@@ -94,7 +94,89 @@ export default function Eventos() {
                 setTiposTicket([]);
             }
         }; cargarTickets();
-    }, [eventoSeleccionado]);
+    }, [eventoSeleccionado]); const comprarTickets = async () => {
+        if (ticketSeleccionado === null || tiposTicket[ticketSeleccionado] === undefined) {
+            alert('Por favor, selecciona un ticket antes de continuar.');
+            return;
+        }
+
+        const ticket = tiposTicket[ticketSeleccionado];
+        const cantidadDisponible = ticket.cantidadDisponible || ticket.disponibles || ticket.stock || 0;
+
+        // Verificar si hay tickets disponibles
+        if (cantidadDisponible <= 0) {
+            alert('No hay tickets disponibles para este tipo.');
+            return;
+        }
+
+        // Verificar si la cantidad a comprar no excede la disponible
+        if (cantidad > cantidadDisponible) {
+            alert(`Solo hay ${cantidadDisponible} tickets disponibles.`);
+            return;
+        }
+
+        try {
+            const respuesta = await fetch(`http://localhost:8080/api/v1/asistentes-evento/crear`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    usuarioId: localStorage.getItem('userId'),
+                    eventoId: eventoSeleccionado.eventoId,
+                    ticketId: ticket.ticketId,
+                    cantidadTickets: cantidad,
+                })
+            }); if (respuesta.ok) {
+                const nuevaCantidadDisponible = (ticket.cantidadDisponible || ticket.disponibles || ticket.stock || 0) - cantidad;
+
+                try {
+                    const respuestaActualizacion = await fetch(`http://localhost:8080/api/v1/tickets/actualizar-cantidad/${ticket.ticketId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cantidadDisponible: nuevaCantidadDisponible
+                        })
+                    });
+
+                    if (respuestaActualizacion.ok) {
+                        console.log('Cantidad de ticket actualizada correctamente');
+
+                        setTiposTicket(prevTickets =>
+                            prevTickets.map((t, index) =>
+                                index === ticketSeleccionado
+                                    ? { ...t, cantidadDisponible: nuevaCantidadDisponible, disponibles: nuevaCantidadDisponible, stock: nuevaCantidadDisponible }
+                                    : t
+                            )
+                        );
+
+                        // Si el ticket se quedó sin stock, resetear la selección
+                        if (nuevaCantidadDisponible <= 0) {
+                            setTicketSeleccionado(null);
+                            setCantidad(1);
+                        }
+                    } else {
+                        console.error('Error al actualizar la cantidad del ticket:', respuestaActualizacion.status);
+                    }
+                } catch (errorActualizacion) {
+                    console.error('Error de conexión al actualizar cantidad:', errorActualizacion);
+                }
+
+                alert('Compra realizada con éxito');
+                setEventoSeleccionado(null);
+                setTicketSeleccionado(null);
+                setCantidad(1);
+            } else {
+                console.error('Error al comprar tickets:', respuesta.status);
+                alert('Error al realizar la compra. Por favor, inténtalo de nuevo.');
+            }
+        } catch (error) {
+            console.error('Error de conexión:', error);
+            alert('Error de conexión. Por favor, inténtalo de nuevo más tarde.');
+        }
+    }
 
     return (
         <>
@@ -217,20 +299,23 @@ export default function Eventos() {
                                         }`}>                                    <div className="card-body p-4">
                                         <h3 className="card-title text-lg">{ticket.tipo || ticket.tipoTicket || ticket.nombre || 'Ticket'}</h3>
                                         <p className="text-2xl font-bold">S/ {ticket.precio || ticket.precioTicket || 0}</p>
-                                        <p className="text-sm text-base-content/70">
-                                            {ticket.disponibles || ticket.cantidadDisponible || ticket.stock || 0} disponibles
-                                        </p>
-                                        <div className="card-actions justify-end mt-2 flex flex-col">
+                                        <div className="text-sm text-base-content/70">
+                                            <p>Total: {ticket.cantidadTotal || ticket.cantidadInicial || ticket.totalTickets || 'No especificado'}</p>
+                                            <p>{ticket.disponibles || ticket.cantidadDisponible || ticket.stock || 0} disponibles</p>
+                                        </div><div className="card-actions justify-end mt-2 flex flex-col">
                                             <button
                                                 onClick={() => {
                                                     setTicketSeleccionado(ticketSeleccionado === index ? null : index);
                                                     setCantidad(1);
                                                 }}
+                                                disabled={(ticket.disponibles || ticket.cantidadDisponible || ticket.stock || 0) <= 0}
                                                 className={`btn ${ticketSeleccionado === index
                                                     ? 'btn-primary'
                                                     : 'btn-neutral'
-                                                    } btn-sm`}>
-                                                {ticketSeleccionado === index ? 'Seleccionado' : 'Seleccionar'}
+                                                    } btn-sm ${(ticket.disponibles || ticket.cantidadDisponible || ticket.stock || 0) <= 0 ? 'btn-disabled opacity-50' : ''}`}>
+                                                {(ticket.disponibles || ticket.cantidadDisponible || ticket.stock || 0) <= 0
+                                                    ? 'Agotado'
+                                                    : ticketSeleccionado === index ? 'Seleccionado' : 'Seleccionar'}
                                             </button>
                                         </div>
                                     </div>
@@ -290,9 +375,35 @@ export default function Eventos() {
                                         S/ {((tiposTicket[ticketSeleccionado]?.precio ||
                                             tiposTicket[ticketSeleccionado]?.precioTicket || 0) * cantidad).toFixed(2)}
                                     </span>
-                                </div>
-                                <button className="btn btn-primary w-full mt-4">
-                                    Confirmar compra
+                                </div>                                <button
+                                    onClick={() => comprarTickets()}
+                                    disabled={
+                                        cantidad <= 0 ||
+                                        cantidad > (tiposTicket[ticketSeleccionado]?.disponibles ||
+                                            tiposTicket[ticketSeleccionado]?.cantidadDisponible ||
+                                            tiposTicket[ticketSeleccionado]?.stock || 0) ||
+                                        (tiposTicket[ticketSeleccionado]?.disponibles ||
+                                            tiposTicket[ticketSeleccionado]?.cantidadDisponible ||
+                                            tiposTicket[ticketSeleccionado]?.stock || 0) <= 0
+                                    }
+                                    className={`btn btn-primary w-full mt-4 ${cantidad <= 0 ||
+                                        cantidad > (tiposTicket[ticketSeleccionado]?.disponibles ||
+                                            tiposTicket[ticketSeleccionado]?.cantidadDisponible ||
+                                            tiposTicket[ticketSeleccionado]?.stock || 0) ||
+                                        (tiposTicket[ticketSeleccionado]?.disponibles ||
+                                            tiposTicket[ticketSeleccionado]?.cantidadDisponible ||
+                                            tiposTicket[ticketSeleccionado]?.stock || 0) <= 0
+                                        ? 'btn-disabled opacity-50' : ''
+                                        }`}>
+                                    {(tiposTicket[ticketSeleccionado]?.disponibles ||
+                                        tiposTicket[ticketSeleccionado]?.cantidadDisponible ||
+                                        tiposTicket[ticketSeleccionado]?.stock || 0) <= 0
+                                        ? 'Sin stock disponible'
+                                        : cantidad > (tiposTicket[ticketSeleccionado]?.disponibles ||
+                                            tiposTicket[ticketSeleccionado]?.cantidadDisponible ||
+                                            tiposTicket[ticketSeleccionado]?.stock || 0)
+                                            ? 'Cantidad excede disponible'
+                                            : 'Confirmar compra'}
                                 </button>
                             </div>
                         </div>

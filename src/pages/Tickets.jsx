@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import Modal from '../components/Modal'
@@ -11,8 +11,32 @@ import veladaImg from '../assets/velada.png'
 import fiestaImg from '../assets/fiesta.png'
 import foroImg from '../assets/foro.png'
 import defaultImg from '../assets/default.png'
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { SplitText } from "gsap/SplitText";
+gsap.registerPlugin(useGSAP, SplitText);
 
 export default function Tickets() {
+
+    const textoAnimadoRef = useRef(null);
+    const { contextSafe } = useGSAP(() => {
+        if (textoAnimadoRef.current) {
+            textoAnimado();
+        }
+    });
+
+    const textoAnimado = contextSafe(() => {
+        const split = new SplitText(textoAnimadoRef.current, { type: "chars" });
+        gsap.from(split.chars, {
+            duration: 0.5,
+            y: 25,
+            stagger: 0.05,
+            autoAlpha: 0,
+            filter: "blur(10px)",
+            ease: "back.out(1.7)",
+        });
+    });
+
     const [ticketSeleccionado, setTicketSeleccionado] = React.useState(null);
     const [misTickets, setMisTickets] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -72,7 +96,7 @@ export default function Tickets() {
             </header>
             <main className="flex flex-col flex-1 min-h-[calc(100vh-60px)]">
                 <div className="hero h-35">
-                    <h1 className="text-5xl font-bold text-center self-end">Mis tickets</h1>
+                    <h1 ref={textoAnimadoRef} className="text-5xl font-bold text-center self-end">Mis tickets</h1>
                 </div>                <div className="container mx-auto px-4 pt-10 pb-20">
                     <div className="flex flex-col gap-6">
                         {isLoading ? (

@@ -3,6 +3,8 @@ import fotoPerfil from '../assets/fotoPerfil.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(useGSAP)
+import chaufa from '../assets/chaufa.png';
+
 export default function PerfilModal() {
     const [userData, setUserData] = useState({
         nombres: '',
@@ -47,12 +49,21 @@ export default function PerfilModal() {
     return (
         <dialog id="perfil" className="modal">
             <div className="modal-box max-w-md">
-                <h3 className="font-bold text-xl mb-6 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                    </svg>
-                    Mi Perfil
-                </h3>
+                <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-bold text-xl mb-6 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                        Mi Perfil
+                    </h3>
+                    <div className='mb-auto'>
+                        <a href='https://www.facebook.com/chifalaunionbarranca/?locale=es_LA' target='_blank' rel='noopener noreferrer'>
+                            <img src={chaufa}
+                                alt="Perfil Icono"
+                                className="w-10 h-10" />
+                        </a>
+                    </div>
+                </div>
 
                 {isLoading ? (
                     <div className="flex justify-center items-center py-8">

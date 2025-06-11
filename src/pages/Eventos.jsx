@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import bodaImg from '../assets/boda.png';
@@ -10,8 +10,32 @@ import conciertoImg from '../assets/concierto.png';
 import circoImg from '../assets/circo.png';
 import veladaImg from '../assets/velada.png';
 import fiestaImg from '../assets/fiesta.png';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { SplitText } from "gsap/SplitText";
+gsap.registerPlugin(useGSAP, SplitText);
 
 export default function Eventos() {
+
+    const textoAnimadoRef = useRef(null);
+    const { contextSafe } = useGSAP(() => {
+        if (textoAnimadoRef.current) {
+            textoAnimado();
+        }
+    });
+
+    const textoAnimado = contextSafe(() => {
+        const split = new SplitText(textoAnimadoRef.current, { type: "chars" });
+        gsap.from(split.chars, {
+            duration: 0.5,
+            y: 25,
+            stagger: 0.05,
+            autoAlpha: 0,
+            filter: "blur(10px)",
+            ease: "back.out(1.7)",
+        });
+    });
+
     const [eventoSeleccionado, setEventoSeleccionado] = React.useState(null);
     const [ticketSeleccionado, setTicketSeleccionado] = React.useState(null);
     const [cantidad, setCantidad] = React.useState(1);
@@ -181,7 +205,7 @@ export default function Eventos() {
             </header>
             <main className="flex flex-col flex-1 min-h-[calc(100vh-60px)]">
                 <div className="hero h-35">
-                    <h1 className="text-5xl font-bold text-center self-end">Asiste a otros eventos</h1>
+                    <h1 ref={textoAnimadoRef} className="text-5xl font-bold text-center self-end">Asiste a otros eventos</h1>
                 </div>                <div className="container mx-auto px-4 pt-10 pb-20">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {isLoading ? (

@@ -9,9 +9,33 @@ import bodaImg from '../assets/boda.png';
 import fiestaImg from '../assets/fiesta.png';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { SplitText } from "gsap/SplitText";
+gsap.registerPlugin(useGSAP, SplitText);
+
 
 const Home = () => {
+
+    const textoAnimadoRef = useRef(null);
+    const { contextSafe } = useGSAP(() => {
+        if (textoAnimadoRef.current) {
+            textoAnimado();
+        }
+    });
+
+    const textoAnimado = contextSafe(() => {
+        const split = new SplitText(textoAnimadoRef.current, { type: "chars" });
+        gsap.from(split.chars, {
+            duration: 0.5,
+            y: 25,
+            stagger: 0.05,
+            autoAlpha: 0,
+            filter: "blur(10px)",
+            ease: "back.out(1.7)",
+        });
+    });
 
     const navigate = useNavigate();
 
@@ -95,7 +119,7 @@ const Home = () => {
             </header>
             <main className="flex flex-col flex-1 min-h-[calc(100vh-60px)]">
                 <div className="hero h-35">
-                    <h1 className="text-5xl font-bold text-center self-end">Mis eventos</h1>
+                    <h1 ref={textoAnimadoRef} className="text-5xl font-bold text-center self-end">Mis eventos</h1>
                 </div>
                 <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
                     <Link to="/crear-evento">

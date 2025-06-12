@@ -5,9 +5,9 @@ export default function Footer() {
         <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-20">
             <nav>
                 <h6 className="footer-title">Paginas</h6>
-                <a className="link link-hover">Inicio</a>
-                <a className="link link-hover">Eventos</a>
-                <a className="link link-hover">Tickets</a>
+                <a className="link link-hover" href='/home'>Inicio</a>
+                <a className="link link-hover" href='/Eventos'>Eventos</a>
+                <a className="link link-hover" href='/Tickets'>Tickets</a>
             </nav>
             <nav>
                 <h6 className="footer-title">Compañia</h6>

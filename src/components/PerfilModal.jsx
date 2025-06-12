@@ -49,19 +49,16 @@ export default function PerfilModal() {
         if (lluviaActivaRef.current) return;
         lluviaActivaRef.current = true;
 
-        // Limpiar intervalo anterior si existe
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
         }
 
-        // Limpiar contenedor anterior si existe
         if (lluviaContainerRef.current) {
             lluviaContainerRef.current.remove();
             lluviaContainerRef.current = null;
         }
 
-        // Crear contenedor para la lluvia
         const container = document.createElement('div');
         container.style.cssText = `
             position: fixed;
@@ -76,7 +73,6 @@ export default function PerfilModal() {
         document.body.appendChild(container);
         lluviaContainerRef.current = container;
 
-        // Función que crea una imagen que cae
         const crearImagenCayendo = () => {
             if (!lluviaActivaRef.current || !lluviaContainerRef.current) return;
 
@@ -92,7 +88,6 @@ export default function PerfilModal() {
                 border-radius: 25%;
             `; lluviaContainerRef.current.appendChild(imagen);
 
-            // Animar solo la caída, sin escalado ni rotación
             gsap.to(imagen, {
                 y: window.innerHeight + 100,
                 x: `+=${Math.random() * 150 - 75}`,
@@ -105,7 +100,6 @@ export default function PerfilModal() {
                 }
             });
 
-            // Efecto de fade out
             gsap.to(imagen, {
                 opacity: 0,
                 duration: 0.8,
@@ -113,7 +107,6 @@ export default function PerfilModal() {
             });
         };
 
-        // Crear imágenes continuamente mientras esté activa la lluvia
         intervalRef.current = setInterval(() => {
             if (lluviaActivaRef.current) {
                 crearImagenCayendo();
@@ -129,7 +122,6 @@ export default function PerfilModal() {
     const detenerLluvia = contextSafe(() => {
         lluviaActivaRef.current = false;
 
-        // Limpiar el contenedor después de un tiempo
         setTimeout(() => {
             if (lluviaContainerRef.current) {
                 lluviaContainerRef.current.remove();

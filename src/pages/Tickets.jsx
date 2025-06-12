@@ -11,6 +11,7 @@ import veladaImg from '../assets/velada.png'
 import fiestaImg from '../assets/fiesta.png'
 import foroImg from '../assets/foro.png'
 import defaultImg from '../assets/default.png'
+import { SinTickets } from '../components/SinElementos'
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { SplitText } from "gsap/SplitText";
@@ -103,16 +104,7 @@ export default function Tickets() {
                             <div className="flex justify-center items-center p-8">
                                 <span className="loading loading-spinner loading-lg"></span>
                             </div>) : misTickets.length === 0 ? (
-                                <div className="flex flex-col justify-center items-center p-12">
-                                    <div className="text-center">
-                                        <svg className="mx-auto h-24 w-24 text-base-content/30 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"></path>
-                                        </svg>
-                                        <h3 className="text-2xl font-semibold text-base-content/70 mb-2">No tienes tickets</h3>
-                                        <p className="text-base-content/50">Aún no has comprado ningún ticket.</p>
-                                        <p className="text-base-content/50 text-sm mt-2">Ve a la sección de Eventos para comprar tickets.</p>
-                                    </div>
-                                </div>
+                                <SinTickets></SinTickets>
                             ) : misTickets.map((ticket) => (
                                 <div key={ticket.asistenteEventoId || ticket.ticketId} className="card h-50 card-side bg-base-100 shadow-xl hover:shadow-2xl transition-all hover:-translate-x-1">
                                     <figure className="w-1/4">

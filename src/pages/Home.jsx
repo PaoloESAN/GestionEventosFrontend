@@ -13,6 +13,7 @@ import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { SplitText } from "gsap/SplitText";
+import { SinMisEventos } from '../components/SinElementos';
 gsap.registerPlugin(useGSAP, SplitText);
 
 
@@ -137,16 +138,7 @@ const Home = () => {
                             <span className="loading loading-spinner loading-lg"></span>
                         </div>
                     ) : eventos.length === 0 ? (
-                        <div className="col-span-3 flex flex-col justify-center items-center p-12">
-                            <div className="text-center">
-                                <svg className="mx-auto h-24 w-24 text-base-content/30 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                <h3 className="text-2xl font-semibold text-base-content/70 mb-2">No tienes eventos creados</h3>
-                                <p className="text-base-content/50">Aún no has creado ningún evento.</p>
-                                <p className="text-base-content/50 text-sm mt-2">Haz clic en "Crear Evento" para empezar.</p>
-                            </div>
-                        </div>
+                        <SinMisEventos />
                     ) : eventos.map((evento) => (
                         <div key={evento.eventoId} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1">
                             <figure>

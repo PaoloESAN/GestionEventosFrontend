@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import fotoPerfil from '../assets/fotoPerfil.png';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(useGSAP)
-import chaufa from '../assets/chaufa.png';
-
+import chaufaIcono from '../assets/chaufaIcono.png';
+import chaufaImagen from '../assets/arrozChaufa.png';
 export default function PerfilModal() {
     const [userData, setUserData] = useState({
         nombres: '',
         apellidos: '',
         email: ''
-    });
-    const [isLoading, setIsLoading] = useState(false);
+    }); const [isLoading, setIsLoading] = useState(false);
+    const lluviaContainerRef = useRef(null);
+    const lluviaActivaRef = useRef(false);
+    const intervalRef = useRef(null);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
@@ -39,11 +41,101 @@ export default function PerfilModal() {
         } finally {
             setIsLoading(false);
         }
-    };
-    const { contextSafe } = useGSAP();
+    }; const { contextSafe } = useGSAP();
 
     const girar = contextSafe(({ currentTarget }) => {
         gsap.to(currentTarget, { rotation: "+=360" });
+    }); const iniciarLluvia = contextSafe(() => {
+        if (lluviaActivaRef.current) return;
+        lluviaActivaRef.current = true;
+
+        // Limpiar intervalo anterior si existe
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+
+        // Limpiar contenedor anterior si existe
+        if (lluviaContainerRef.current) {
+            lluviaContainerRef.current.remove();
+            lluviaContainerRef.current = null;
+        }
+
+        // Crear contenedor para la lluvia
+        const container = document.createElement('div');
+        container.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        `;
+        document.body.appendChild(container);
+        lluviaContainerRef.current = container;
+
+        // Función que crea una imagen que cae
+        const crearImagenCayendo = () => {
+            if (!lluviaActivaRef.current || !lluviaContainerRef.current) return;
+
+            const imagen = document.createElement('img');
+            imagen.src = chaufaImagen; imagen.style.cssText = `
+                position: absolute;
+                width: ${Math.random() * 60 + 50}px;
+                height: ${Math.random() * 60 + 50}px;
+                top: -100px;
+                left: ${Math.random() * 100}vw;
+                opacity: 0.9;
+                pointer-events: none;
+                border-radius: 25%;
+            `; lluviaContainerRef.current.appendChild(imagen);
+
+            // Animar solo la caída, sin escalado ni rotación
+            gsap.to(imagen, {
+                y: window.innerHeight + 100,
+                x: `+=${Math.random() * 150 - 75}`,
+                duration: Math.random() * 2.5 + 2,
+                ease: "power2.in",
+                onComplete: () => {
+                    if (imagen.parentNode) {
+                        imagen.remove();
+                    }
+                }
+            });
+
+            // Efecto de fade out
+            gsap.to(imagen, {
+                opacity: 0,
+                duration: 0.8,
+                delay: Math.random() * 2 + 1
+            });
+        };
+
+        // Crear imágenes continuamente mientras esté activa la lluvia
+        intervalRef.current = setInterval(() => {
+            if (lluviaActivaRef.current) {
+                crearImagenCayendo();
+            } else {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                }
+            }
+        }, 200);
+    });
+
+    const detenerLluvia = contextSafe(() => {
+        lluviaActivaRef.current = false;
+
+        // Limpiar el contenedor después de un tiempo
+        setTimeout(() => {
+            if (lluviaContainerRef.current) {
+                lluviaContainerRef.current.remove();
+                lluviaContainerRef.current = null;
+            }
+        }, 3000);
     });
 
     return (
@@ -55,12 +147,19 @@ export default function PerfilModal() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
                         Mi Perfil
-                    </h3>
-                    <div className='mb-auto'>
-                        <a href='https://www.facebook.com/chifalaunionbarranca/?locale=es_LA' target='_blank' rel='noopener noreferrer'>
-                            <img src={chaufa}
+                    </h3>                    <div className='mb-auto'>
+                        <a
+                            href='https://www.facebook.com/chifalaunionbarranca/?locale=es_LA'
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            onMouseEnter={iniciarLluvia}
+                            onMouseLeave={detenerLluvia}
+                        >
+                            <img
+                                src={chaufaIcono}
                                 alt="Perfil Icono"
-                                className="w-10 h-10" />
+                                className="w-10 h-10 transition-transform hover:scale-110"
+                            />
                         </a>
                     </div>
                 </div>

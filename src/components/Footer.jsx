@@ -1,19 +1,21 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 export default function Footer() {
+    const navigate = useNavigate();
     return (
         <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-20">
             <nav>
                 <h6 className="footer-title">Paginas</h6>
-                <a className="link link-hover" href='/home'>Inicio</a>
-                <a className="link link-hover" href='/Eventos'>Eventos</a>
-                <a className="link link-hover" href='/Tickets'>Tickets</a>
-                <a className="link link-hover" href='/admin'>Admin</a>
+                <a className="link link-hover" onClick={() => navigate('/home')}>Inicio</a>
+                <a className="link link-hover" onClick={() => navigate('/Eventos')}>Eventos</a>
+                <a className="link link-hover" onClick={() => navigate('/Tickets')}>Tickets</a>
+                <a className="link link-hover" onClick={() => navigate('/admin')}>Admin</a>
             </nav>
             <nav>
                 <h6 className="footer-title">Compañia</h6>
                 <a className="link link-hover">Sobre nosotros</a>
                 <a className="link link-hover">Contacto</a>
+                <a className="link link-hover" onClick={() => navigate('/balatro')}>Balatro</a>
             </nav>
             <nav>
                 <h6 className="footer-title">Social</h6>

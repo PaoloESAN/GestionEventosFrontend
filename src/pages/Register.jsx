@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ModalErrorConexion, ModalRegistroEmail, ModalRegistroError, ModalRegistroExitoso, ModalRegistroErrorCampos, ModalRegistroErrorContra } from '../components/ModalesConexion';
-
+import logoEventos from '../assets/logoEventos.svg';
 const Register = () => {
     const [formData, setFormData] = useState({
         nombres: '',
@@ -75,11 +75,11 @@ const Register = () => {
             <div className="min-h-screen bg-base-200 flex items-center justify-center">
                 <div className="card max-w-[500px] bg-base-100 shadow-2xl">
                     <div className="card-body p-8">
-                        <div className="flex justify-center mb-8">
+                        <div className="flex justify-center">
                             <img
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                                src={logoEventos}
                                 alt="logo de el login"
-                                className="w-20 h-20"
+                                className="w-30 h-30"
                             />
                         </div>
                         <h2 className="card-title justify-center text-3xl font-bold mb-8">Crear una cuenta nueva</h2>

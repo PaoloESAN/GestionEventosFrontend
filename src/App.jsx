@@ -7,6 +7,7 @@ import Eventos from './pages/Eventos';
 import Tickets from './pages/Tickets';
 import CrearEvento from './pages/CrearEvento';
 import ChatBot from './pages/ChatBot';
+import Balatro from './pages/Balatro';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/tickets" element={<Tickets />} />
         <Route path="/crear-evento" element={<CrearEvento />} />
         <Route path="/admin" element={<ChatBot />} />
+        <Route path="/balatro" element={<Balatro />} />
         <Route
           path="/home"
           element={

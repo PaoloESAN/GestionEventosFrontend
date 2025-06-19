@@ -25,8 +25,8 @@ const createWindow = () => {
     width: 1000,
     height: 800,
     show: false,
-    title: 'DatabaseFix',
-    icon: path.join(__dirname, 'DBIcon.ico'),
+    title: 'EventoFix',
+    icon: path.join(__dirname, 'EventosIcon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -36,7 +36,10 @@ const createWindow = () => {
   //mainWindow.loadFile(path.join(__dirname, 'index.html'));
   mainWindow.webContents.on('did-finish-load', () => {
     setTimeout(() => {
-      splash.close();
+      if (splash && !splash.isDestroyed()) {
+        splash.close();
+        splash = null;
+      }
       mainWindow.show();
     }, 1000);
   }

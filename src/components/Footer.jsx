@@ -8,6 +8,7 @@ export default function Footer() {
                 <a className="link link-hover" href='/home'>Inicio</a>
                 <a className="link link-hover" href='/Eventos'>Eventos</a>
                 <a className="link link-hover" href='/Tickets'>Tickets</a>
+                <a className="link link-hover" href='/admin'>Admin</a>
             </nav>
             <nav>
                 <h6 className="footer-title">Compañia</h6>

@@ -1,10 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import BotonTemas from './BotonTemas'
 import PerfilModal from './PerfilModal'
 import fotoPerfil from '../assets/fotoPerfil.png';
 
 function NavBar({ tabAct }) {
+    const navigate = useNavigate();
+
     let homeAct = 'tab text-xl';
     let eventosAct = 'tab text-xl';
     let ticketsAct = 'tab text-xl';
@@ -20,7 +22,7 @@ function NavBar({ tabAct }) {
         <>
             <div className="navbar shadow-sm backdrop-blur">
                 <div className="navbar-start">
-                    <a className="btn btn-ghost text-xl">EventoFix</a>
+                    <button className="btn btn-ghost text-xl" onClick={() => navigate('/home')}>EventoFix</button>
                 </div>
                 <div className="tabs tabs-border navbar-center">
                     <ul className="menu menu-horizontal px-1">

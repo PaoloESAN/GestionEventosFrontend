@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ModalLoginError, ModalErrorConexion, ModalLoginExitoso } from '../components/ModalesConexion';
 import logoEventos from '../assets/logoEventos.svg';
-
+import Aurora from '../components/Aurora';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -33,6 +33,13 @@ const Login = () => {
             <ModalLoginError />
             <ModalErrorConexion />
             <div className="min-h-screen bg-base-200 flex items-center justify-center px-4">
+                <div className="absolute top-0 left-0 w-full h-full">
+                    <Aurora
+                        blend={0.5}
+                        amplitude={1.0}
+                        speed={0.5}
+                    />
+                </div>
                 <div className="card w-full max-w-[500px] bg-base-100 shadow-2xl">
                     <div className="card-body p-8">
                         <div className="flex justify-center">

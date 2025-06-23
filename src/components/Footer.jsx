@@ -9,7 +9,6 @@ export default function Footer() {
                 <a className="link link-hover" onClick={() => navigate('/home')}>Inicio</a>
                 <a className="link link-hover" onClick={() => navigate('/Eventos')}>Eventos</a>
                 <a className="link link-hover" onClick={() => navigate('/Tickets')}>Tickets</a>
-                <a className="link link-hover" onClick={() => navigate('/admin')}>Admin</a>
             </nav>
             <nav>
                 <h6 className="footer-title">Compañia</h6>

@@ -1,18 +1,14 @@
 import React from 'react'
 import AnwareLogo from '../assets/anware.png'
 import LetterGlitch from '../components/LetterGlitch'
+import PruebaGlitch from '../components/LetrasJapo.jsx'
 export default function Anware() {
     return (
         <>
-            <div className='relative h-screen w-screen'>
-                <LetterGlitch
-                    glitchSpeed={50}
-                    centerVignette={true}
-                    outerVignette={false}
-                    smooth={true}
-                />
+            <div className='relative h-screen w-screen overflow-hidden'>
+                <PruebaGlitch />
             </div>
-            <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
                 <div className="flex flex-col items-center content-start h-screen">
                     {/*Card para encerrar todo */}
                     <div className='flex flex-col items-center justify-center bg-base-200 p-4 mt-8 pb-6 rounded-4xl'>

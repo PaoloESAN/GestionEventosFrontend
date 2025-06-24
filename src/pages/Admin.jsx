@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import Login from '../components/LoginAdmin';
-import ChatComponent from '../components/ChatComponent';
+import PanelAdmin from '../components/PanelAdmin';
 export default function ChatBot() {
-    const [logueado, setLogueado] = useState(false);
+    const [logueado, setLogueado] = useState(true);
     const loguin = () => {
         setLogueado(true);
     }
     return (
         logueado ? (
             <div>
-                <ChatComponent />
+                <PanelAdmin />
             </div>
         ) : (
             <div>

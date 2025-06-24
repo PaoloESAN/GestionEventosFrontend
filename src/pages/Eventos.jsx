@@ -35,14 +35,22 @@ export default function Eventos() {
             filter: "blur(10px)",
             ease: "back.out(1.7)",
         });
-    });
-
-    const [eventoSeleccionado, setEventoSeleccionado] = React.useState(null);
+    }); const [eventoSeleccionado, setEventoSeleccionado] = React.useState(null);
     const [ticketSeleccionado, setTicketSeleccionado] = React.useState(null);
     const [cantidad, setCantidad] = React.useState(1);
     const [eventos, setEventos] = React.useState([]);
     const [tiposTicket, setTiposTicket] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
+
+    // Estados para modales
+    const [modalMessage, setModalMessage] = React.useState('');
+    const [modalType, setModalType] = React.useState('error'); // 'error' o 'success'
+
+    const showModal = (message, type = 'error') => {
+        setModalMessage(message);
+        setModalType(type);
+        document.getElementById('alert_modal').showModal();
+    };
 
     const getImagenPorCategoria = (categoria) => {
         switch (categoria?.toLowerCase()) {
@@ -120,7 +128,7 @@ export default function Eventos() {
         }; cargarTickets();
     }, [eventoSeleccionado]); const comprarTickets = async () => {
         if (ticketSeleccionado === null || tiposTicket[ticketSeleccionado] === undefined) {
-            alert('Por favor, selecciona un ticket antes de continuar.');
+            showModal('Por favor, selecciona un ticket antes de continuar.');
             return;
         }
 
@@ -128,12 +136,12 @@ export default function Eventos() {
         const cantidadDisponible = ticket.cantidadDisponible || ticket.disponibles || ticket.stock || 0;
 
         if (cantidadDisponible <= 0) {
-            alert('No hay tickets disponibles para este tipo.');
+            showModal('No hay tickets disponibles para este tipo.');
             return;
         }
 
         if (cantidad > cantidadDisponible) {
-            alert(`Solo hay ${cantidadDisponible} tickets disponibles.`);
+            showModal(`Solo hay ${cantidadDisponible} tickets disponibles.`);
             return;
         }
 
@@ -183,19 +191,17 @@ export default function Eventos() {
                     }
                 } catch (errorActualizacion) {
                     console.error('Error de conexión al actualizar cantidad:', errorActualizacion);
-                }
-
-                alert('Compra realizada con éxito');
+                } showModal('Compra realizada con éxito', 'success');
                 setEventoSeleccionado(null);
                 setTicketSeleccionado(null);
                 setCantidad(1);
             } else {
                 console.error('Error al comprar tickets:', respuesta.status);
-                alert('Error al realizar la compra. Por favor, inténtalo de nuevo.');
+                showModal('Error al realizar la compra. Por favor, inténtalo de nuevo.');
             }
         } catch (error) {
             console.error('Error de conexión:', error);
-            alert('Error de conexión. Por favor, inténtalo de nuevo más tarde.');
+            showModal('Error de conexión. Por favor, inténtalo de nuevo más tarde.');
         }
     }
 
@@ -439,9 +445,21 @@ export default function Eventos() {
                             Cerrar
                         </button>
                     </div>
-                </div>
-            </dialog>
+                </div>            </dialog>
             )}
+
+            {/* Modal de Alertas */}
+            <dialog id="alert_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className={`font-bold text-lg ${modalType === 'success' ? 'text-success' : 'text-error'}`}>
+                        {modalType === 'success' ? '¡Éxito!' : '¡Atención!'}
+                    </h3>
+                    <p className="py-4">{modalMessage}</p>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>cerrar</button>
+                </form>
+            </dialog>
 
             <Footer />
         </>

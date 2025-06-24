@@ -6,6 +6,14 @@ export default function LoginAdmin({ loguin }) {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    // Estados para modales
+    const [modalMessage, setModalMessage] = useState('');
+
+    const showModal = (message) => {
+        setModalMessage(message);
+        document.getElementById('alert_modal').showModal();
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -14,7 +22,7 @@ export default function LoginAdmin({ loguin }) {
                 loguin();
                 setIsLoading(false);
             } else {
-                alert('Usuario o contraseña incorrectos');
+                showModal('Usuario o contraseña incorrectos');
                 setIsLoading(false);
             }
         }, 1000);
@@ -103,9 +111,19 @@ export default function LoginAdmin({ loguin }) {
                                 'Iniciar Sesión'
                             )}
                         </button>
-                    </form>
-                </div>
+                    </form>                </div>
             </div>
+
+            {/* Modal de Alertas */}
+            <dialog id="alert_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg text-error">¡Atención!</h3>
+                    <p className="py-4">{modalMessage}</p>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>cerrar</button>
+                </form>
+            </dialog>
         </div>
     );
 }

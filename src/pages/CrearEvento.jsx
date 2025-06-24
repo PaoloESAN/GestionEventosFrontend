@@ -10,41 +10,54 @@ export default function CrearEvento() {
     const [eventoSeleccionado, setEventoSeleccionado] = useState('');
     const [eventosExistentes, setEventosExistentes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const userId = localStorage.getItem('userId'); useEffect(() => {
-        const cargarEventos = async () => {
-            if (!userId) {
-                setIsLoading(false);
-                return;
-            }
+    const userId = localStorage.getItem('userId');
 
-            try {
-                const respuesta = await fetch('http://localhost:8080/api/v1/eventos/organizador/' + userId);
-                if (respuesta.ok) {
-                    const data = await respuesta.json();
-                    console.log('Datos recibidos:', data);
-                    if (Array.isArray(data)) {
-                        setEventosExistentes(data);
-                    }
-                    else if (data.eventos) {
-                        setEventosExistentes(data.eventos);
-                    }
-                    else {
-                        setEventosExistentes([]);
-                    }
-                } else {
-                    console.error('Error al cargar eventos');
+    // Estados para modales
+    const [modalMessage, setModalMessage] = useState('');
+    const [modalType, setModalType] = useState('error'); // 'error' o 'success'
+
+    const showModal = (message, type = 'error') => {
+        setModalMessage(message);
+        setModalType(type);
+        document.getElementById('alert_modal').showModal();
+    };
+
+    const cargarEventos = async () => {
+        if (!userId) {
+            return;
+        }
+
+        try {
+            const respuesta = await fetch('http://localhost:8080/api/v1/eventos/organizador/' + userId);
+            if (respuesta.ok) {
+                const data = await respuesta.json();
+                console.log('Datos recibidos:', data);
+                if (Array.isArray(data)) {
+                    setEventosExistentes(data);
+                }
+                else if (data.eventos) {
+                    setEventosExistentes(data.eventos);
+                }
+                else {
                     setEventosExistentes([]);
                 }
-            } catch (error) {
-                console.error('Error de conexión:', error);
+            } else {
+                console.error('Error al cargar eventos');
                 setEventosExistentes([]);
-            } finally {
-                setIsLoading(false);
             }
+        } catch (error) {
+            console.error('Error de conexión:', error);
+            setEventosExistentes([]);
+        }
+    }; useEffect(() => {
+        const cargarEventosIniciales = async () => {
+            setIsLoading(true);
+            await cargarEventos();
+            setIsLoading(false);
         };
 
-        cargarEventos();
-    }, [userId]);
+        cargarEventosIniciales();
+    }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const [formData, setFormData] = useState({
         evento: {
@@ -96,28 +109,6 @@ export default function CrearEvento() {
         }));
     };
 
-    /*{
-  "nombre": "Boda nose",
-  "descripcion": "Una boda increible",
-  "fechaInicio": "2025-07-15T09:00",
-  "fechaFin": "2025-07-15T18:00",
-  "organizadorId": 1,
-  "locacion":"la casa de alberto",
-  "categoria": "Boda",
-  "estado": "planificado"
-} */
-
-    /* 
-    {
-      "eventoId": 1,
-      "tipoTicket": "VIP",
-      "precio": 99.99,
-      "cantidadDisponible": 100,
-      "fechaInicioVenta": "2025-06-09T10:00:00",
-      "fechaFinVenta": "2025-06-30T23:59:59",
-      "cantidadTotal": 100
-  }
-    */
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (modo === 'nuevo') {
@@ -146,19 +137,41 @@ export default function CrearEvento() {
                         cantidadDisponible: formData.ticket.cantidadTotal
                     })
                 });
+
                 if (ticketRespuesta.ok) {
-                    //document.getElementById('modalEventoCreado').showModal();
-                    alert('Evento y ticket creados exitosamente');
+                    showModal('Evento y ticket creados exitosamente', 'success');
+                    // Recargar la lista de eventos existentes
+                    await cargarEventos();
+                    // Limpiar el formulario
+                    setFormData({
+                        evento: {
+                            nombre: '',
+                            categoria: '',
+                            descripcion: '',
+                            fechaInicio: '',
+                            fechaFin: '',
+                            locacion: ''
+                        },
+                        ticket: {
+                            tipoTicket: '',
+                            cantidadTotal: '',
+                            fechaInicioVenta: '',
+                            fechaFinVenta: '',
+                            precio: ''
+                        }
+                    });
                 } else {
                     const ticketData = await ticketRespuesta.json();
                     console.error('Error al crear el ticket:', ticketData.mensaje);
-                    alert('Error al crear el ticket');
-                    //document.getElementById('modalErrorCrearTicket').showModal();
+                    showModal('Error al crear el ticket');
                 }
             } else {
                 console.error('Error al crear el evento:', data.mensaje);
-                alert('Error al crear el evento');
-                //document.getElementById('modalErrorCrearEvento').showModal();
+                if (respuesta.status === 409) {
+                    showModal('Ya existe un evento con ese nombre');
+                } else {
+                    showModal('Error al crear el evento');
+                }
             }
         } else {
             const respuesta = await fetch(`http://localhost:8080/api/v1/tickets/crear`, {
@@ -172,12 +185,24 @@ export default function CrearEvento() {
                     cantidadDisponible: formData.ticket.cantidadTotal
                 })
             });
+
             if (respuesta.ok) {
-                alert('Ticket creado exitosamente');
-                //document.getElementById('modalTicketCreado').showModal();
+                showModal('Ticket creado exitosamente', 'success');
+                // Recargar la lista de eventos existentes
+                await cargarEventos();
+                // Limpiar el formulario de ticket
+                setFormData(prev => ({
+                    ...prev,
+                    ticket: {
+                        tipoTicket: '',
+                        cantidadTotal: '',
+                        fechaInicioVenta: '',
+                        fechaFinVenta: '',
+                        precio: ''
+                    }
+                }));
             } else {
-                alert('Error al crear el ticket:');
-                //document.getElementById('modalErrorCrearTicket').showModal();
+                showModal('Error al crear el ticket');
             }
         }
     };
@@ -241,14 +266,15 @@ export default function CrearEvento() {
                             </button>
                         </div>
                     </>
-                ) : (<AgregarTicketForm
-                    eventosExistentes={eventosExistentes}
-                    eventoSeleccionado={eventoSeleccionado}
-                    setEventoSeleccionado={setEventoSeleccionado}
-                    formData={formData}
-                    handleChange={handleChange}
-                    tiposTicket={tiposTicket}
-                />
+                ) : (
+                    <AgregarTicketForm
+                        eventosExistentes={eventosExistentes}
+                        eventoSeleccionado={eventoSeleccionado}
+                        setEventoSeleccionado={setEventoSeleccionado}
+                        formData={formData}
+                        handleChange={handleChange}
+                        tiposTicket={tiposTicket}
+                    />
                 )}
             </div>
         </div>
@@ -272,6 +298,20 @@ export default function CrearEvento() {
                     )}
                 </div>
             </main>
+
+            {/* Modal de Alertas */}
+            <dialog id="alert_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className={`font-bold text-lg ${modalType === 'success' ? 'text-success' : 'text-error'}`}>
+                        {modalType === 'success' ? '¡Éxito!' : '¡Atención!'}
+                    </h3>
+                    <p className="py-4">{modalMessage}</p>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>cerrar</button>
+                </form>
+            </dialog>
+
             <Footer />
         </>
     );

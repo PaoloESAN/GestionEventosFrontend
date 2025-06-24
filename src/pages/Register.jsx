@@ -54,7 +54,7 @@ const Register = () => {
 
             if (respuesta.ok) {
                 document.getElementById('modalRegistroExitoso').showModal();
-            } else if (respuesta.status === 400) {
+            } else if (respuesta.status === 409) {
                 document.getElementById('modalRegistroEmail').showModal();
             } else {
                 document.getElementById('modalRegistroError').showModal();

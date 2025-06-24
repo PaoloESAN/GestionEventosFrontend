@@ -1,15 +1,20 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
-
+const path = require('path');
 module.exports = {
   packagerConfig: {
+    icon: path.resolve(__dirname, 'src', 'EventosIcon'),
     asar: true,
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        name: 'evento_app',
+        setupIcon: path.resolve(__dirname, 'src', 'EventosIcon.ico'),
+        shorcutName: 'EventoApp',
+      },
     },
     {
       name: '@electron-forge/maker-zip',

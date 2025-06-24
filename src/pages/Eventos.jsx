@@ -42,9 +42,8 @@ export default function Eventos() {
     const [tiposTicket, setTiposTicket] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    // Estados para modales
     const [modalMessage, setModalMessage] = React.useState('');
-    const [modalType, setModalType] = React.useState('error'); // 'error' o 'success'
+    const [modalType, setModalType] = React.useState('error');
 
     const showModal = (message, type = 'error') => {
         setModalMessage(message);

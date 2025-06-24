@@ -148,7 +148,7 @@ export default function ChatComponent() {
                 {/* Header */}
                 <div className='flex justify-center items-center mb-6 mt-1'>
                     <button className='btn btn-primary' onClick={() => navigate('/home')}>
-                        Volver al Login
+                        Volver al Inicio
                     </button>
                 </div>
                 <div className="text-center mb-10">

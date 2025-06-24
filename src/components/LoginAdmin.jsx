@@ -6,7 +6,6 @@ export default function LoginAdmin({ loguin }) {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Estados para modales
     const [modalMessage, setModalMessage] = useState('');
 
     const showModal = (message) => {

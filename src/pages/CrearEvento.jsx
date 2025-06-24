@@ -12,9 +12,9 @@ export default function CrearEvento() {
     const [isLoading, setIsLoading] = useState(true);
     const userId = localStorage.getItem('userId');
 
-    // Estados para modales
+    {/* Estados para modales */ }
     const [modalMessage, setModalMessage] = useState('');
-    const [modalType, setModalType] = useState('error'); // 'error' o 'success'
+    const [modalType, setModalType] = useState('error'); {/* 'error' o 'success' */ }
 
     const showModal = (message, type = 'error') => {
         setModalMessage(message);
@@ -140,9 +140,9 @@ export default function CrearEvento() {
 
                 if (ticketRespuesta.ok) {
                     showModal('Evento y ticket creados exitosamente', 'success');
-                    // Recargar la lista de eventos existentes
+                    {/* Recargar la lista de eventos existentes */ }
                     await cargarEventos();
-                    // Limpiar el formulario
+                    {/* Limpiar el formulario */ }
                     setFormData({
                         evento: {
                             nombre: '',
@@ -188,9 +188,7 @@ export default function CrearEvento() {
 
             if (respuesta.ok) {
                 showModal('Ticket creado exitosamente', 'success');
-                // Recargar la lista de eventos existentes
                 await cargarEventos();
-                // Limpiar el formulario de ticket
                 setFormData(prev => ({
                     ...prev,
                     ticket: {

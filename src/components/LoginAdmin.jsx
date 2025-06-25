@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import hackerImage from '../assets/hacker.png';
 import { useNavigate } from 'react-router-dom';
+import Magnet from './DivMagnet';
 export default function LoginAdmin({ loguin }) {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
@@ -116,9 +117,11 @@ export default function LoginAdmin({ loguin }) {
                     </form>
                 </div>
                 <div className='text-center'>
-                    <button className='btn btn-ghost text-lg mt-4' onClick={() => navigate('/home')}>
-                        Volver
-                    </button>
+                    <Magnet padding={30} disabled={false} magnetStrength={2}>
+                        <button className='btn btn-ghost text-lg mt-4' onClick={() => navigate('/home')}>
+                            Volver
+                        </button>
+                    </Magnet>
                 </div>
             </div>
 

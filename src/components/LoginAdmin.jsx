@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import hackerImage from '../assets/hacker.png';
+import { useNavigate } from 'react-router-dom';
 export default function LoginAdmin({ loguin }) {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
@@ -26,6 +27,8 @@ export default function LoginAdmin({ loguin }) {
             }
         }, 1000);
     };
+
+    const navigate = useNavigate();
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 via-base-200 to-secondary/20 p-4">
@@ -81,7 +84,7 @@ export default function LoginAdmin({ loguin }) {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-primary transition-colors"
+                                    className="absolute z-10 inset-y-0 right-0 pr-3 flex items-center hover:text-primary transition-colors"
                                 >
                                     {showPassword ? (
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -110,7 +113,13 @@ export default function LoginAdmin({ loguin }) {
                                 'Iniciar Sesión'
                             )}
                         </button>
-                    </form>                </div>
+                    </form>
+                </div>
+                <div className='text-center'>
+                    <button className='btn btn-ghost text-lg mt-4' onClick={() => navigate('/home')}>
+                        Volver
+                    </button>
+                </div>
             </div>
 
             {/* Modal de Alertas */}

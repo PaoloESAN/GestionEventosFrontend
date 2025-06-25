@@ -150,14 +150,14 @@ const Home = () => {
                             </figure>
                             <div className="card-body p-4">
                                 <div className="flex justify-between items-center">
-                                    <div className="badge badge-primary">
+                                    <div className="badge badge-primary h-full mr-4">
                                         {new Date(evento.fechaInicio).toLocaleDateString('es-PE', {
                                             day: 'numeric',
                                             month: 'long',
                                             year: 'numeric'
                                         })}
                                     </div>
-                                    <div className="badge badge-ghost">{evento.locacion}</div>
+                                    <div className="badge badge-ghost h-full">{evento.locacion}</div>
                                 </div>                                <h2 className="card-title mt-2">{evento.nombre}</h2>
                                 <p className="text-sm text-base-content/70">
                                     {evento.organizador?.nombres

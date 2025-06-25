@@ -23,7 +23,7 @@ const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1000,
-    height: 800,
+    height: 900,
     show: false,
     title: 'EventoFix',
     icon: path.join(__dirname, 'EventosIcon.ico'),

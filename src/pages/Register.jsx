@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ModalErrorConexion, ModalRegistroEmail, ModalRegistroError, ModalRegistroExitoso, ModalRegistroErrorCampos, ModalRegistroErrorContra } from '../components/ModalesConexion';
 import logoEventos from '../assets/logoEventos.svg';
+import Squares from '../components/BgSquares';
 const Register = () => {
     const [formData, setFormData] = useState({
         nombres: '',
@@ -72,6 +73,17 @@ const Register = () => {
             <ModalRegistroExitoso onContinue={() => navigate('/login')} />
             <ModalRegistroErrorContra />
             <ModalRegistroErrorCampos />
+            <div>
+                <div className="absolute top-0 left-0 w-full h-full bg-black">
+                    <Squares
+                        speed={0.2}
+                        squareSize={40}
+                        direction='diagonal'
+                        borderColor='#5f45e7'
+                        hoverFillColor='#fff'
+                    />
+                </div>
+            </div>
             <div className="min-h-screen bg-base-200 flex items-center justify-center">
                 <div className="card max-w-[500px] bg-base-100 shadow-2xl">
                     <div className="card-body p-8">
